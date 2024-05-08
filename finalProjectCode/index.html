@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="styles.css" />
+        <script src="game.js" defer></script>
+    </head>
+    <body>
+		<!--actual game set up-->
+        <div id = "grid">
+			<!--each cell on the grid where users can enter x or o-->
+			<!--cell 0 will be the top left corner of the grid and cell 8 will be the bottom right corner-->
+			<div class="cell" data-value="0"></div>
+			<div class="cell" data-value="1"></div>
+			<div class="cell" data-value="2"></div>
+			<div class="cell" data-value="3"></div>
+			<div class="cell" data-value="4"></div>
+			<div class="cell" data-value="5"></div>
+			<div class="cell" data-value="6"></div>
+			<div class="cell" data-value="7"></div>
+			<div class="cell" data-value="8"></div>
+		</div>
+		<!--game over set up-->
+		<div class = "done">
+			<!--text to show that the game has finished-->
+			<span class = "game-over-text"></span>
+        </div>
+    </body>
+</html>

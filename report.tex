@@ -1,0 +1,1240 @@
+\documentclass{article}
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage[usenames]{color}
+\usepackage{titlesec}
+\usepackage{hyperref}
+  \hypersetup{
+    colorlinks = true,
+    urlcolor = blue,       % color of external links using \href
+    linkcolor= blue,       % color of internal links
+    citecolor= blue,       % color of links to bibliography
+    filecolor= blue,        % color of file links
+    }
+
+\usepackage{listings}
+\usepackage{pdfpages}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=haskell,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\theoremstyle{theorem}
+   \newtheorem{theorem}{Theorem}[section]
+   \newtheorem{corollary}[theorem]{Corollary}
+   \newtheorem{lemma}[theorem]{Lemma}
+   \newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+   \newtheorem{definition}[theorem]{Definition}
+   \newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+  \newtheorem{remark}[theorem]{Remark}
+
+
+\title{CPSC-354 Semester Report}
+\author{Ali Woodward \\ Chapman University}
+
+\date{12/18/2022}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is the final submission report for my homework's and final project in CPSC 354- Programming Languages. The report includes homework for weeks 1-12 as well as a final project that explores the languages JavaScript and TypeScript as well as implements a project in these languages.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}\label{introduction}
+
+\subsection{About Me}
+
+My name is Ali Woodward and I am taking this course as a senior with a self design major in Computational Cognition and Assistive Technology.
+I am excited to further improve my skillset in the Computer Science field and apply what I learn in this course to the real world.
+
+\section{Homework}\label{homework}
+
+
+\subsection{Week 1}
+
+This assignment is an implementation of a simple Greatest Common Denominator
+algorithm using Euclid's literally mathematical algorithm. Below is the code in python as well as a description of the code provided.
+
+\medskip\noindent
+Greatest Common Denominator code with the example output for values 9 and 33.
+
+\begin{lstlisting}
+    def gcd(a,b):
+    if a <= 0:
+        print("Please input a value larger than 0")
+    elif b <= 0:
+        print("Please input a value larger than 0")
+    elif a > b:
+        a = a - b
+        gcd(a,b)
+    elif b > a:
+        b = b - a
+        gcd(a,b)
+    else:
+        print(a)
+
+
+gcd(9,33)
+
+\end{lstlisting}
+The above code is an algorithm that calculates the greatest common denominator using the example numbers 9 and 33.
+This algorithm works by first checking to see if 9 and 33 are less than or equal to 0. If the number is equal to zero it requests that the user enters a new number.
+If both numbers are greater than zero the code continues on by checking to see if a (9) is greater than b (33) or vice versa.
+
+\medskip\noindent
+With our sample numbers of a = 9 and b = 33, the code continues on by recognizing that b > a. Once this has been established, the b value is changed to b - a.
+Next, recursion is used to call gdc(a,b) with the original number a (9) and the new number b (24).
+This exact process repeats until a becomes greater than b once b is equal to 6.
+
+\medskip\noindent
+Now that a is greater than b, the recursive process repeats with a, where a is reset to a - b.
+The first round of this process results in 9-6 where a is now equal to 3.
+Now, b is once more greater than a with b = 6 and a = 3.
+The recursive process happens one last with with b = b - a, resulting in a and b both being equal to 3.
+
+
+\medskip\noindent
+Once the values a and b are equal, the algorithm runs until the final else statement where the value for a (as well as the b) is printed.
+In this case, the value 3 is printed as the greatest common denominator.
+
+\subsection{Week 2}
+This assignment is an introduction to coding in Haskell with an assortmnet of example algorithms being implemented. These functions are based off of a given output and meant to get students thinking about recursive coding practices in Haskell.
+
+\medskip\noindent
+The code below are the results for this homework assignemnt. Partner work has been done with Arman Siddiqui on this assignment to learn the implementation of Haskell alongside a classmate.
+
+\begin{lstlisting}
+
+- - select_evens
+select_evens:: [a] -> [a]
+select_evens [] = []
+select_evens [x] = []
+select_evens (x:y:xs) =
+  [y] ++ select_evens (xs)
+
+
+- - select_odds
+select_odds:: [a] -> [a]
+select_odds [] = []
+select_odds [x] = [x]
+select_odds (x:y:xs) =
+  [x] ++ select_odds (xs)
+
+
+- - member
+member :: Eq t => t -> [t] -> Bool
+member d [] = False
+member d (x:xs)
+  | d == x = True
+  | d /= x = member d (xs)
+
+
+- - append
+append :: [a] -> [a] -> [a]
+append (x:xs) [] = (x:xs)
+append (x:xs) (y:ys) =
+  append ((x:xs) ++ [y]) (ys)
+
+
+- - revert
+revert :: [a] -> [a]
+revert [] = []
+revert (x:xs) =
+  revert (xs) ++ [x]
+
+
+- - less_equal
+less_equal :: Ord a => [a] -> [a] -> Bool
+less_equal [] [] = True
+less_equal (x:xs) (y:ys)
+  | x <= y = less_equal (xs) (ys)
+  | otherwise = False
+
+
+main = do
+  print $ append [1,2] [3,4,5]
+
+\end{lstlisting}
+
+Given example problem in main for append, the code produces the output below:
+
+\begin{lstlisting}
+
+[1,2,3,4,5]
+
+\end{lstlisting}
+
+The function append is tested above with the given input [1, 2] [3, 4, 5]. The output produced is [1, 2, 3, 4, 5] showing that the code does in fact append the first list by adding the second list to the end.
+
+\medskip\noindent
+The code shown above uses recursion in order to complete the specified actions in Haskell. Some functions use type assignemnt while others do not based upon discretion and simplicity.
+
+The following entails examples for each of the above practice problem.
+
+\begin{lstlisting}
+
+select_evens [1,2,3,4,5] =
+  2 : (select_evens [3,4,5]) =
+  2 : 4 : (select_evens [5]) =
+  2 : 4 : ([]) = --basecase
+  [2,4]
+
+select_odds [1,2,3,4,5] =
+  1 : (select_odds [3,4,5]) =
+  1 : 3 : (select_odds [5]) =
+  1 : 3 : (5) = --basecase
+  [1,3,5]
+
+member 7 [2,7,5] =
+  member 7 [7,5] =
+  True --basecase
+
+append [2,3] [4,5] =
+  2 : ( append [3] [4,5]) =
+  2 : 3 (append [] [4,5]) =
+  2 : 3 : [4,5] = --basecase
+  [2,3,4,5]
+
+revert [7,6,5] =
+  append (revert [6,5]) [7] =
+  append (append (revert [5]) [6]) [7] =
+  append (append (append (revert [])[5])[6])[7] =
+  append (append (append ([5])[6])[7]) =
+  append (append [5] [6]) [7] =
+  append ([5,6]) [7] =
+  [5,6,7]
+
+less_equal [1,2,3] [2,4,2] =
+  less_equal [2,3] [4,2] =
+  less_equal [3] [2] =
+  False
+
+\end{lstlisting}
+
+\subsection{Week 3}
+This week's coding assignment is the recursive algorithm for Tower of Hanoi. After playing the game and discussing how it works in class, the implementation of this algorithm was excellent recursive practice for a real life game/problem.
+Similar to the game that we played in class, the homework implements a tower with a height of 5 and is shown below:
+
+\begin{lstlisting}
+
+hanoi 5 0 2
+	hanoi 4 0 1
+		hanoi 3 0 2
+			hanoi 2 0 1
+				hanoi 1 0 2 = move 0 2
+				move  0 1
+				hanoi 1 2 1 = move 2 1
+			move 0 2
+			hanoi 2 1 2
+				hanoi 1 1 0 = move 1 0
+				move  1 2
+				hanoi 1 0 2 = move 0 2
+    move 0 1
+    hanoi 3 2 1
+      hanoi 2 2 0
+        hanoi 1 2 1 = move 2 1
+        move 2 0
+        hanoi 1 1 0 = move 1 0
+      move 2 1
+      hanoi 2 0 1
+        hanoi 1 0 2 = move 0 2
+        move 0 1
+        hanoi 1 2 1 = move 2 1
+   move 0 2
+   hanoi 4 1 2
+     hanoi 3 1 0
+        hanoi 2 1 2
+          hanoi 1 1 0 = move 1 0
+        move 1 2
+        hanoi 1 0 2 = move 0 2
+      move 1 0
+      hanoi 2 2 0
+        hanoi 1 2 1 = move 2 1
+        move 2 0
+        hanoi 1 1 0 = move 1 0
+    move 1 2
+    hanoi 3 0 2
+      hanoi 2 0 1
+        hanoi 1 0 2 = move 0 2
+        move 0 1
+        hanoi 1 2 1 = move 2 1
+      move 0 2
+      hanoi 2 1 2
+            hanoi 1 1 0 = move 1 0
+            move 1 2
+            hanoi 1 0 2 = move 0 2
+
+\end{lstlisting}
+
+The pattern implemented is the one that we briefly discussed during class. Once the pattern is recognized, it is a repetition based process.
+In the above implementation, the word Hanoi appears 31 times.
+
+\medskip\noindent
+A formula that represents this for any number of disks 'n' would be: $2^{n-1}$.
+
+\medskip\noindent
+Extracted from the execution, below are the moves that make it possible to solve this problem for the tower with a height of 5.
+
+\begin{lstlisting}
+
+0->2
+0->1
+2->1
+0->2
+1->0
+1->2
+0->2
+0->1
+2->1
+2->0
+1->0
+2->1
+0->2
+0->1
+2->1
+0->2
+1->0
+1->2
+0->2
+1->0
+2->1
+2->0
+1->0
+1->2
+0->2
+0->1
+2->1
+0->2
+1->0
+1->2
+0->2
+
+\end{lstlisting}
+
+\subsection{Week 4}
+\includegraphics[scale = 0.7]{HW4.pdf}
+
+\medskip\noindent
+The abstract syntax tree of 1 + 2 + 3 is the same as (1 + 2) + 3, because of the fact that addition is left recursive. However, the concrete syntax trees for these equations are different.
+
+\subsection{Week 6}
+This weeks homework assignment asked to reduce a given Lambda expression as seen below.
+
+\begin{lstlisting}
+
+(\exp . \two . \three . exp two three)
+(\m.\n. m n)
+(\f.\x. f (f x))
+(\f.\x. f (f (f x)))
+
+=
+
+((\m.\n. m n) (\f.\x. f (f x)) (\f.\x. f (f (f x))))
+
+=
+
+((\m.\n. m n)  (\f.\x. f (f x))  (\f2.\x2. f2 (f2 (f2 x2))))
+
+=
+
+((\n. (\f.\x. f (f x))  n)  (\f2.\x2. f2 (f2 (f2 x2))))
+
+=
+
+((  (\f.\x. f (f x))  (\f2.\x2. f2 (f2 (f2 x2)))))
+
+=
+
+((  (\x. (\f2.\x2. f2 (f2 (f2 x2))) ((\f2.\x2. f2 (f2 (f2 x2))) x)) ))
+
+=
+
+((  (\x. (\x2. ((\f2.\x2. f2 (f2 (f2 x2))) x) (((\f2.\x2. f2 (f2 (f2 x2))) x) (((\f2.\x2. f2 (f2 (f2 x2))) x) x2))) ) ))
+
+
+=
+
+((  (\x. (\x2. ((\x2. x (x (x x2)))) (((\f2.\x2. f2 (f2 (f2 x2))) x) (((\f2.\x2. f2 (f2 (f2 x2))) x) x2))) ) ))
+
+=
+
+((  (\x. (\x2. ((\x2. x (x (x x2)))) (((\x2. x (x (x x2))) ) (((\f2.\x2. f2 (f2 (f2 x2))) x) x2))) ) ))
+
+=
+
+((  (\x. (\x2. ((\x2. x (x (x x2)))) (((\x2. x (x (x x2))) ) (((\x2. x (x (x x2)))) x2))) ) ))
+
+=
+
+((  (\x. (\x2. ((\x2. x (x (x x2)))) (((\x2. x (x (x x2))) ) (((\x2. x (x (x x2)))) x2))) ) ))
+
+
+\end{lstlisting}
+\medskip\noindent
+
+While I feel confident in my answer up to step 6, I am aware that the work following may have resulted in errors. I was unsure whether to begin work on the following line at the 5th or 6th parenthesis in from the left since both had a closing parenthesis with a following function but only the 6th parenthesis was immediately followed by an equation. Much time and consideration was put into working through this problem and I feel as though I have learned a lot though I would like to ask for clarification regarding this step in the future.
+
+\subsection{Week 7}
+
+Part I-
+For each line, describe whether it is bound or free, if it is bound say what the binder and the scope of the variable are
+
+\begin{itemize}
+    \item e1 (line 5): Bound, binder: evalCBN, scope: e1 is used after the equals until the after line 7
+    \item e2 (line 5): Bound, binder: evalCBN, scope: e2 is used after the equals until the after line 7
+    \item e3 (line 6): Free
+    \item id (line 18): Bound, binder: subst
+    \item id1 (line 18): Bound, binder: subst
+    \item e1 (line 18): Free
+    \item e2 (line 21): Bound, binder: subst
+\end{itemize}
+
+Part II- I worked on this portion of the homework with Joeseph Sneifer who I did Assignments 2 and 3 with.
+
+\begin{lstlisting}
+1. (Empty diagram)
+Confluent: True
+Terminating: True
+UNF: True
+
+2. a
+Confluent: True
+Terminating: True
+UNF: True
+
+3.   *
+   a ->
+Confluent: True
+Terminating: False
+UNF: False
+
+4.    a
+    /  \
+   v    v
+   b    c
+Confluent: False
+Terminating: True
+UNF: False
+
+5.    *
+    a ->
+    |
+    v
+    b
+Confluent: True
+Terminating: False
+UNF: True
+
+6.
+       a
+     /   \
+    v     v  *
+   c      b ->
+Confluent: False
+Terminating: False
+UNF: False
+
+7.
+       a
+     /   \
+ *  v     v  *
+ <- b     c ->
+Confluent: False
+Terminating: False,
+UNF: False
+
+
+\end{lstlisting}
+
+
+
+
+
+\subsection{Week 8}
+This weeks assignmnent is in regard to a few questions about this rewrite system:
+
+
+the new ARS is the same as the old
+
+\begin{lstlisting}
+aa -> a
+bb -> b
+ba -> ab
+ab -> ba
+\end{lstlisting}
+\medskip\noindent
+Why does the ARS not terminate?:
+
+\medskip\noindent
+The ARS does not terminate because an infinite loop is created by the last two lines. ba goes to ab and then ab goes back to ba which causes a continuous cycle that does not break.
+
+\medskip\noindent
+What are the normal forms?:
+
+\medskip\noindent
+In this particular rewrite system, a is the normal form of aa and b is the normal form of bb while ab and ba do not have normal forms.
+
+\medskip\noindent
+Can you change the rules so that the new ARS has unique normal forms (but still has the same equivalence relation)?:
+
+\medskip\noindent
+Yes! The new ARS with unique normal forms (though still equivalent) would be as follows:
+
+\begin{lstlisting}
+aa -> a
+bb -> b
+ba <-> ab
+\end{lstlisting}
+
+
+\medskip\noindent
+What do the normal forms mean? Describe the function implemented by the ARS:
+
+\medskip\noindent
+Because aa and bb reduce to a and b, these are relatively easy and straight forward normal forms. The last rule states that ab and ba are essentially equivalent and therefore reduce to each other.
+
+\subsection{Week 9}
+
+\medskip\noindent
+\textbf{Original Submission:}
+
+This is the outline with three checkpoints that will allow for my project to be manageable and completed by the due date. The first deadline will be on November 7th, in which I will have learned the basics of JavaScript with TypeScript as well as some of the background/history of the language and have compiled and run some simple code to understand use of the language. The second checkpoint will be November 22nd and will be the largest portion of the project. By this checkpoint I will have completed the game that I am creating using JavaScript and Typescript and have some continual progress on the writing portion of the project. The last checkpoint of the project will be on December 5th in which I would like to have an outline/rough draft of all of the research and paper done so that for the last week of work I can focus on writing and polishing everything up.
+
+\medskip\noindent
+If any revisions to this plan of checkpoints is to be made I would be happy to come to office hours to talk about the project and/or revise my order or dates of doing things.
+
+\textbf{Update:}
+
+As discussed with you over the course of multiple emails, these deadlines were not all met due to external circumstances that I disclosed when emailing you. While as you know I struggled to meet these deadlines and the reasons as to why, I did create a final project that I put an extreme number of total hours into and work that I am very proud of. Thank you for understanding and communicating with me throughout the beginning stages of my project, I appreciate your guidance.
+
+\medskip\noindent
+This week we were asked to provide analysis for the following ARSs:
+
+\begin{lstlisting}
+ba -> ab
+ab -> ba
+ac -> ca
+ca -> ac
+bc -> cb
+cb -> bc
+
+aa -> b
+ab -> c
+ac ->
+bb ->
+cb -> a
+cc -> b
+\end{lstlisting}
+
+\medskip\noindent
+
+This ARS is that it is not terminating and is not in Unique Normal form (UNF).
+
+\medskip\noindent
+
+\subsection{Week 10}
+This weeks assignment is a calculation that was begun in class and finished as a homework assignment:
+
+\medskip\noindent
+Homework: Let F be $\lambda$f.$\lambda$n. if n == 0 then 1 else n * f (n - 1)
+
+\medskip\noindent
+fix$_{F}2$ = $_\beta$Ffix$_{F}$2
+
+= $_\beta$ if 2 == 0 then 1 else 2 * fix$_{F}$(2-1)
+
+= $_\beta$ 2 * (fix$_{F}$(1))
+
+= $_\beta$ 2 * F(fix$_{F}$(1))
+
+= $_\beta$ 2 * (if 1 == 0 then 1 else 1 * fix$_{F}$(1-1))
+
+= $_\beta$ 2 * (1) * (fix$_{F}$(0))
+
+= $_\beta$ 2 * (1) * F(fix$_{F}$(0))
+
+= $_\beta$ 2 * (1) * (if 0 == 0 then 1 else 0 * fix$_{F}$(0-1))
+
+= $_\beta$ 2 * (1) * (1)
+
+= $_\beta$ 2
+
+\medskip\noindent
+This calculation was worked on alongside Arman Siddiqui to better understand the problem and steps. This calculation can also be worked out through use of LambdaNat and recursive coding.
+
+\medskip\noindent
+
+\subsection{Week 11}
+
+Domain-specific programming languages are programming languages that are designed to solve specific problems within a particular field or domain. In the financial industry, domain-specific programming languages are specifically often used to create and manage financial contracts. These contracts are complex financial instruments that need to be implemented well designed code in order to be used effectively and beneficial for both parties involved.
+
+One example of a domain-specific programming language that is commonly used in the financial industry are Domain-Specific Modeling Languages (DSML). “Domain-Specific Modeling Languages (DSMLs) formalize the application structure, behavior, and requirements within particular domains” \cite{19}. This high-level programming language is used to create and manage financial contracts. It allows financial analysts and traders to express the terms and conditions of a contract in a clear and concise manner, using a language that is specific to the financial domain. Another example of a DSL used in the financial industry is Financial Product Markup Language (FpML). “FpML is the open source XML standard for electronic dealing and processing of derivatives” \cite{20}. It is used to describe and exchange information about financial products, such as derivatives and swaps.
+
+Languages such as these in the financial industry provide a common language for financial institutions to communicate and exchange information about financial contracts. Ultimately, this helps to reduce the risk of errors and miscommunications when dealing with complex financial instruments, both on the side of financial institutions and clients.
+
+One of the greatest benefits when using domain-specific programming languages is that they are specific to the industry in which they are being applied. This means that specific language and syntax is used when creating these languages so that they are manageable for professionals in other fields, such as the financial industry, to use.  This allows for professionals to understand and work with the contracts created using DSLs without needing to learn the syntax and terminology of common programming languages used for best computer science practices.
+
+Overall, domain-specific programming languages might truly be the future of the financial industry! They provide a specialized and efficient way to create and manage financial contracts better than ever before. DSLs helps to improve the efficiency and accuracy of financial contracts, which ultimately reduces the risk of errors and increases profitability for financial institutions.
+
+
+\medskip\noindent
+\textbf{Question:} After reading a paper on "Automated Execution of Financial Contracts on Blockchains," there is much discussion about how to execute and describe financial contracts within a distributed ledger.  The paper addresses many ways that using a level-3 distributed ledger system can transform the contract process for all parties involved and ultimately, transform the financial industry if they are able to adapt to using such technologies. After reading this paper, I am left with the question of the legal implication that such technology may pose. Like many forms of up and coming technologies, there are questions of moral and legal implications. The financial industry is so heavily impacted by legal obligations and rules that I find it fascinating how such technology may run into legal issues regarding privacy and more.
+
+\medskip\noindent
+Egelund-Müller, B., Elsman, M., Henglein, F. et al. Automated Execution of Financial Contracts on Blockchains. Bus Inf Syst Eng 59, 457–467 (2017). https://doi.org/10.1007/s12599-017-0507-z
+
+\medskip\noindent
+\textbf{Answer 1:} I think this is a really interesting question Nathan. I believe that the capability of contracts being understood in a graphical way accurately may lie heavily in machine learning techniques that analyze these contracts before depicting them by decisions based on a decision tree. I would love to know the answer to this and I am curious about the capabilities of such decision trees.
+
+\medskip\noindent
+\textbf{Answer 2:} I read an article that discussed some of these topics. I think that like most technology, advances and systems that solve problems to make human life and decisions easier have high chances of being successful and highly implemented. I do think that they can be successful but like the article I read mentioned, more research needs to be done on the legal implications of this technology before it can be truly successful and widely used. 
+
+\medskip\noindent
+
+\subsection{Week 12}
+
+In this weeks homework assignment we were asked to complete the method of analysis from the lecture to while (x!=0) do z:=z*y; x:= x-1 done.
+
+
+Using the example problems from the homework assignment as well as my best knowledge from the discussion in class, I believe the answer to this question using Hoare logic should be close to the following:
+
+\medskip\noindent
+
+\{true\} while (x!=0) do z:=z*y; x:=x-1 done\{x=0\}
+
+and
+
+$\{z = m \wedge{} x = n \wedge{} y = k\}$ while $(x \neq 0)$ do z:z*y; x:= x - 1; done \{z = n * k\}
+
+\medskip\noindent
+indicating that the invariant is \{z = n * k\}
+
+\medskip\noindent
+Because this problem uses * instead of +, I am not entirely confident in my answer but did try my best to thoroughly work through the problem using the previous examples that were given and the logic provided.
+
+\medskip\noindent
+I would like to note that while trying to understand this problem in a recursive sense, I am aware that z is being multiplied by y each time around in the while loop with would result in an exponential nature in which case, my answer may be missing an aspect of an exponent that I am a little confused about from lack of understanding this portion based on the notes and class.
+
+\ldots
+
+\section{Project}
+
+\textbf{Earlier in the semester this was my proposed final project: }
+
+For my project, I am planning on following one of the suggested prompts: "Learn a new programming language, write a tutorial and implement an interesting project". I have decided to pursue this project because I feel as though I challenge myself in new and exciting ways when I learn a new language and gain more knowledge and understanding of programming languages through diversifying my skillset.
+I am planning on learning JavaScript for my project because it will be a brand new language for me and is often used for implementation of areas that I am not familiar working with such as web and game development. I would like to develop a simple game using JavaScript. My current plan is to develop a memory card game. I have never coded with the ultimate goal of creating a visual interactive experience so I think this will be a fun and challenging way for me to gain a new experience, learn a new language, and better understand programming languages as a whole.
+
+\textbf{After revision:}
+
+After turning in this proposal, I was advised to add TypeScript into my project for a more extensive implementation of JavaScript. Working with both languages I decided to implement tic-tac-toe (moving towards a different simple game) because I wanted to make sure I could create an interactive experience with the two languages. Creating an interactive game included adding in HTML and CSS so that the game is able to be played in a web browser. While my original proposed project was much simpler and only included JavaScript, I am proud of the research that I conducted on both languages as well as the interactive coding project that I have implemented.
+
+\ldots
+\maketitle
+
+\begin{abstract}
+This paper will first explore the history of JavaScript, discussing the origins and process of development that took place to create the programming language that exists today. The next section of this paper will introduce TypeScript and slightly more briefly discuss the history of TypeScript and how it came to be. Next, I will discuss the inclusion of TypeScript alongside JavaScript programs and how TypeScript addresses shortcomings of JavaScript to create more cohesive and comprehensive projects using the two languages. Lastly, I will discuss the use of both languages in relation to my coding project and how I chose to highlight the languages through my project.
+
+\end{abstract}
+
+\subsection{Introduction}
+In 2020 it became arguable that JavaScript is the most broadly used programming language, being used by about 71.5\% of professionals \cite{1}. However, even with its widespread use, JavaScript is not the best language when it comes to developing large scale applications efficiently and with the best outcome. Addressing this issue with JavaScript comes the application of TypeScript. “TypeScript enhances JavaScript with a module system, classes, interfaces, and a static type system”  \cite{3}. In this written report, I will further discuss the history and functionality of both languages as well as the way that they complement one another.
+
+\subsection{The Development of JavaScript}
+
+\subsubsection{Where it all Began: Netscape and the initial problem}
+
+JavaScript was first developed as a programming language in the early 1990's by Brendan Eich \cite{2}.
+
+In order to fully understand the creation of JavaScript, it is important to understand the story behind why it was created in the first place. Brendan Eich was hired by Netscape in 1995 during a time of great rush and panic to stake claims in the same market of "the web" as Microsoft \cite{1}. Soon into this technology race, Netscape teamed up with Sun Microsystems at the peak of their marketing campaign for their unreleased language, Java. Chief technical officer of Sun Microsystems stated in a press release that "by integrating the Java language into Netscape Navigator, Netscape and Sun will enable a whole new wave of Internet services that we are just beginning to imagine, such as interactive advertising and real-time stock portfolio management" \cite{4}. Netscape began the rapid search for a scripting language to implement alongside Java and found "Scheme, Perl, Python, Tcl, and Visual Basic as not viable due to business interests and/or time to market
+considerations" \cite{1}. Marc Andreessen and Bill Joy, founders at Netscape and Sun, decided that designing and implementing a new language with the intention of it being complementary to Java was their best solution.
+
+Employees at Netscape and Sun doubted the need for a complimentary language, questioning why Java wasn't suitable enough for scripting on its own, why two languages would be better than one, and did Netscape have the resources to create a successful programming language \cite{1}. What they found were obvious answers to these push backs. In regard to why Java wasn't suitable for scripting on its own, it was established that Java was not easy or simple enough for beginner use \cite{1}. Their main competitor at the time, Microsoft, had already developed multiple languages for different levels of programmers, Visual C++ for professionals and Visual Basic for beginner programmers and others. In order to keep up with the their competitor, the founders argued that it made sense to create a simpler language for anyone to be able to use, similar to what Microsoft had done but in compliment to Java \cite{1}. After addressing these concerns and establishing why the route of creating a new language was their best option, Andreessen suggested the name "Mocha" as the name for their new language, as a play on words with Java. The last concern that had yet to be addressed was whether or not Netscape had the resources to make a language such as this possible. Luckily, this is where Brendan Eich came in and proved it all possible \cite{1}.
+
+
+\subsubsection{Mocha}
+After having established why creating a new scripting language was a vital task, Andreessen decided that the new language, Mocha, "would have to look like Java while remaining easy to use and object-based rather than class-based, like Java" \cite{1}. The first implementation of Mocha was created by Brendan Eich in just ten consecutive days, during the race to solve the problem at hand. The creation of Mocha involved a variety of key components meant to supplement Java without being too similar and creating competition between the two languages. One of the most notable design decisions of this language was the agreement that it would be "object-based" but without the inclusion of classes. "The
+prototype [of Mocha] used a hand-written lexer and recursive-descent parser. The parser emitted bytecoded instructions rather than a parse tree. The bytecode interpreter was simple and slow" \cite{1}. The decision to use bytecode was based on the "requirement of Netscape’s LiveWire server10 whose developers were counting on embedding Mocha even before it was prototyped" \cite{1}. Mocha was intended to be created in a fashion that was so easy to use, just about anyone could implement a few lines of the language into their HTML document and after the prototype of Mocha was displayed to the rest of the company at the end of ten days, it was deemed a success. With the first success of Mocha in May of 1995, there was great hope for a more complete and complex implementation of the language for Netscape 2 which was scheduled to be released during September of the same year. This upscale of Mocha "would require designing and implementing the APIs that enabled Mocha programs to interact with Web pages" \cite{1} which the language was not currently able to do. The design and creation of Mocha was a vital process for the creation of JavaScript. This ten day period of the making of Mocha is a compelling story about the creation of a programming language and for more information of Brendan Eich's account of the experience, an archived blog of his telling of the story can be found here \cite{BE}
+
+\subsubsection{From Mocha to JavaScript}
+The announcement of JavaScript happened on December 4, 1995 in a press release that disclosed the following statement:
+
+
+"Netscape Communications Corporation (NASDAQ: NSCP) and Sun Microsystems, Inc. (NASDAQ: SUNW), today announced JavaScript, an open, cross-platform object scripting language for the creation and customization of applications on enterprise networks and the Internet. The JavaScript language complements Java, Sun's industry-leading object-oriented, cross-platform programming language. The initial version of JavaScript is available now as part of the beta version of Netscape Navigator 2.0, which is currently available for downloading from Netscape's web site." \cite{5}
+
+The language had previously been released to the public back in September of the same year under the name "LiveScript" as a part of Netscape's beta release. This first release of JavaScript 1.0 in December of 1995 was a "simple dynamically typed language supporting numeric, string, and Boolean values; first-class functions; and, an object data type" \cite{1}. Though the language offered many promising functionalities and implementations, Eich knew that the rushed nature of the language creation offered many shortcomings, as it was still in early stages when it was released as a part of the Netscape Enterprise Server 2.0. At this point in development the JavaScript 1.0 "feature set was incomplete relative to the envisioned language design and exhibited various problematic bugs and edge case behaviors even though Eich continued to fix bugs in the initial Mocha implementation throughout the Navigator 2.0 release process" \cite{1}. Brendan Eich continued to work on the development of JavaScript and it was not until the release of JavaScript 1.1 in 1996 that the first true implementation and definition of JavaScript was completed.
+
+
+\subsubsection{JavaScript Today}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{JavaScript_Java.jpg}
+\caption{\label{fig:JavaScript_Java}Netscape Handbook Comparison of JavaScript and Java published in 1997 \cite{6}. It is worthy to note that some of the terminology appears slightly different than present day terminology. For more information on the handbook, please visit the site provided.}
+\end{figure}
+
+While JavaScript was developed as a companion language to Java, it is actually syntactically more comparable to C. However, in opposition to C, JavaScript source code for a script can be embedded directly into HTML documents, establishing the simplicity for users that was intended during the creation of the language. Source code is embedded into HTML documents by using the \lstinline{<script></script>} tag to surround the JavaScript code. To better understand the differences between Java and JavaScript, Netscape released a comparison table as a part of their JavaScript handbook in June of 1997 \cite{6} found in Figure 1.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{JavaScript_Features.png}
+\caption{\label{fig:JavaScript_Features}Most commonly used JavaScript features \cite{1}.}
+\end{figure}
+
+JavaScript today is much more complex than it was during its initial development by 1997. Some of its most common features can be found in Figure 2 \cite{1}. JavaScript quickly gained popularity, especially on the front of web development and soon became one of the most widely used programming languages on the web. It has accomplished its initial goal of adding interactive elements to web pages and is further used to build web and mobile apps, and server-side applications. It has become an essential tool for modern web development, and knowing the story of its development only makes the language all the more interesting and impressive.
+
+\subsubsection{JavaScript: Some Key Elements}
+
+After understanding how and why JavaScript was developed, there are a few key elements about the language that are important to further uncover.
+
+\textbf{JavaScript is Object-Oriented:}
+Many people associate object-oriented programming with languages such as Java and C++, languages that use classes as a part of object-oriented programming \cite{7}. However, unlike these languages, JavaScript did not include classes until 2015 with the release of EcmaScript 2015 (ES6) \cite{17}. While for many JavaScript users this may have seemed like an exciting new inclusion, classes in JavaScript are more so "sytanctic sugar" for the prototype-based inheritance model that JavaScript still follows \cite{17} unlike many other object oriented languages that are class-based like Java and C++. Like other object-oriented programming languages, JavaScript uses encapsulation, aggregation, inheritance, and polymorphism \cite{7}. Because JavaScript is not a class-based language, it allows for less planning and outlining in many cases, as it is much easier to add in types, objects, and changes without having to mess with class structures.
+
+\textbf{Variables:}
+JavaScript is a dynamically typed language, meaning that unlike many other languages, you do not need to specify data types when defining variables. Variables are containers for storing and manipulating data in JavaScript \cite{8}. While data types are not present in variable definition there are three key words that can be used when defining a variable: "var", "let", or "const". From 1995 to 2015, the only option for declaring a variable was to use the keyword "var" \cite{8}. Declaring a variable using "var" allows for that variable to be "updated and re-declared within its scope" \cite{9}. There are few times when it is most beneficial to use "var" and most often it is useful to define variables with "let" or "const", which were added to the language in 2015. "Const" establishes constant values that cannot be changed while "let" defines variables that can be updated but cannot be re-declared \cite{9}. Understanding variable types in JavaScript is essential for proper use of the language and might be something for users to get used to without needing to declare variable's data types.
+
+\begin{lstlisting}
+Different ways to declare a JavaScript variable:
+
+a = 4;
+var b = "hello;
+let c = true;
+const d = 100;
+\end{lstlisting}
+
+\subsubsection{JavaScript Overview}
+Overall, JavaScript has come a long way and has accomplished many of the goals that it set out to achieve back in 1995 when it began to be developed. While it was originally intended to be a complimentary language to Java, it has developed to become one of the most widely used language to date for web development and applications. JavaScript is one of the most accessible languages to learn since so much of the internet’s web pages are embedded with JavaScript. In fact, when people click "show" on their web browser to display the code behind the website, they will be often be viewing JavaScript. While it is impressive how far the language has come, there are still some notable shortcomings of the language that will be discussed in the following sections with the introduction of TypeScript.
+
+\subsection{The Development of TypeScript}
+
+\subsubsection{The History and Motive Behind the Language}
+
+In 2012, TypeScript was created by Anders Hejlsberg, a developer at Microsoft who also created Turbo Pascal, Delphi, J++, and C\# \cite{10}. The creation of TypeScript was based heavily upon one component: the shortcomings of JavaScript. In the original TypeScript handbook published by Microsoft originally in 2012 and updated since, the company makes the following statements in regard to their concerns with JavaScript:
+
+"While the size, scope, and complexity of programs written in JavaScript has grown exponentially, the ability of the JavaScript language to express the relationships between different units of code has not. Combined with JavaScript’s rather peculiar runtime semantics, this mismatch between language and program complexity has made JavaScript development a difficult task to manage at scale" \cite{11}.
+
+Essentially, JavaScript is not always the best language for large scale applications. Boris Cherny, a software engineer at Facebook and the author of "Programming TypeScript" shared in an interview with Nate Black that JavaScript "lacks fundamental features, such as static types that are necessary to scale a program across more engineers and more devices" \cite{12}. Because JavaScript is a weakly-typed language, meaning that there are looser rules for typing, as well as a dynamically-typed language, where type errors are found during runtime instead of compile time, JavaScript can be less predictable and more susceptible to errors.
+
+Type errors are the most common type of error that programmers run into \cite{11}, especially with a language like JavaScript with its loosely-typed syntax and high margin for human misunderstanding of what type is expected by the program. Because of JavaScript's difficulties developing and maintaining large scale applications as well as its type system that is highly susceptible to human error, Anders Hejlsberg and further Microsoft as a whole developed TypeScript with the following purpose: \textbf{"The goal of TypeScript is to be a static typechecker for JavaScript programs - in other words, a tool that runs before your code runs (static) and ensures that the types of the program are correct (typechecked)"} \cite{11}.
+
+In a PowerPoint deck shared at the Microsoft Faculty Summit in 2013, Steve Lucco (a technical fellow at Microsoft) presented TypeScript in a simple mission statement as \textbf{"a language for application scale JavaScript development"} \cite{13}. After understanding the motive behind the development of TypeScript, I will go on to explain some of the key elements of TypeScript and how the language is implemented alongside JavaScript to accomplish what the development of the language has set out to achieve.
+
+
+
+\subsubsection{TypeScript: Key Elements}
+
+TypeScript is defined as being a superset of JavaScript. A superset of a programming language is essentially "an extension that introduces new features and expands the capabilities of that language" \cite{14}. Because TypeScript is a superset of JavaScript, "any program written in JavaScript will also work in TypeScript" \cite{14}. How to use a TypeScript as a superset of JavaScript will be further discussed in the following section after first taking a look at some of the elements that TypeScript offers.
+
+The book "TypeScript Revealed" written by Dan Maharry states that "TypeScript is all about the additional object-oriented-like syntax and features that it brings to JavaScript" \cite{10}. Some of the main features that TypeScript brings to JavaScript are the inclusion of static typing, classes, interfaces, arrow functions, and modules \cite{10}. "As TypeScript aims to provide lightweight assistance to programmers, the module system and the type system are flexible and easy to use" \cite{3}. In order to better understand these features, I will highlight two of the key points of TypeScript, discussing how TypeScripts type system and class system provide essential features to implement alongside JavaScript.
+
+\textbf{Type System:}
+TypeScript is a statically typed programming language, unlike JavaScript which is dynamically typed. "As a static type checker TypeScript will audit the behavior of certain variables" before a program is run \cite{14}. As stated in the TypeScript Handbook provided by Microsoft, "TypeScript’s type system is very powerful because it allows expressing types in terms of other types" \cite{11}.
+
+\textbf{Classes:}
+TypeScript enables scalable application structuring in which "classes, modules and interfaces enable clear contracts between components" \cite{13}. TypeScript enables use of the class keyword in which it "adds type annotations and other syntax to allow you to express relationships between classes and other types" \cite{11}. This feature enables class-based object-oriented programming to be executed in JavaScript programs.
+
+With a general understanding of why TypeScript was developed and some of the key components that make the language differ from JavaScript, we can now further explore how TypeScript functions alongside JavaScript as a superset and why TypeScript can be such a valuable resource for writing scalable JavaScript code.
+
+
+\subsection{Using TypeScript and JavaScript Together}
+
+\subsubsection{How TypeScript Adds what JavaScript Lacks}
+
+There are two main ways in which TypeScript helps to address the shortcomings of JavaScript when writing and running code. The first point that I will discuss is how TypeScript can help programmers avoid type errors that can be difficult to fix when only writing code in JavaScript. When using TypeScript, since it is a statically typed language programmers are able to define data types when writing code, unlike the vague loosely typed usage of only "var", "let", and "const" when programming in JavaScript. Being able to specify data types in TypeScript that then compile to JavaScript allows for more control over ones code and can ultimatley allow for fewer bugs and errors. To further explain how this works, "TypeScript's static compile-time type system accurately models the dynamic run-time type system of JavaScript" \cite{13}. The compile-time conversion that occurs from TypeScript to JavaScript allows for "type checking during this conversion, and reports type-related bugs" \cite{15}. Because type errors are one of the most common bugs that programmers face \cite{11}, TypeScript can be helpful to catch bugs and errors in code by throwing errors at compile time, alerting programmers of the error and saving time and difficulty when debugging. This type system that is offered when using TypeScript in addition to JavaScript is extremely helpful for creating well functioning code, which becomes especially important when writing large scale applications.
+
+The second feature of TypeScript that becomes especially useful in application with JavaScript is the object-oriented programming features that TypeScript supports that are not included in JavaScript such as classes, interfaces, and modules \cite{11}. In many other object-oriented programming languages such as Java, best programming practices often include a well organized structure of code through use of classes and class-based programming. While JavaScript allows class definition by use of the class keyword, it does not support class-based programming which can be difficult when creating well structured large applications. The inclusion of TypeScript with JavaScript allows for users to organize and structure their code with the use of classes, allowing for larger projects that have improved reliability and maintainability. "TypeScript adds type annotations and other syntax to allow you to express relationships between classes and other types" \cite{11} addressing one of the major downfalls of JavaScript in the sense that it is often a poor language for large scale applications.
+
+\subsubsection{How to Use Them Together from a Technical Standpoint}
+
+Microsoft's TypeScript Handbook includes an important section for JavaScript programmers hoping to implement their language called "TypeScript for JavaScript Programmers" \cite{16}. This portion of the handbook opens with the following statement, reiterating many of the points already discussed in the previous section but in a straightforward manner for those already familiar with JavaScript:
+
+"TypeScript stands in an unusual relationship to JavaScript. TypeScript offers all of JavaScript’s features, and an additional layer on top of these: TypeScript’s type system. For example, JavaScript provides language primitives like string and number, but it doesn’t check that you’ve consistently assigned these. TypeScript does. This means that your existing working JavaScript code is also TypeScript code. The main benefit of TypeScript is that it can highlight unexpected behavior in your code, lowering the chance of bugs." \cite{16}.
+
+Understanding how helpful this type system can be, we can then discuss the application of how this works. One way that TypeScript's value system works with JavaScript is through inference. As a superset of JavaScript, TypeScript understands JavaScript language and can assign variable types by assessing the value that has been assigned \cite{16}. For instance in the following JavaScript code, no extra characters are needed for TypeScript to understand and define that the "Hello World!" value assigned to the variable helloWorld is a string type.
+
+\begin{lstlisting}
+let helloWorld = "Hello World!";
+\end{lstlisting}
+
+By use of inference, TypeScript is able to assign a string type to the value of "helloWorld" without any clear declaration of variable type \cite{16}.
+
+While inference works for many cases, there are some instances in which defining variable types might be more useful. Luckily, TypeScript's type system also supports a way to manually define variable types \cite{16}. Using an interface declaration, users can explicitly define variable types in objects. To show what this looks like in practice, here is an example of defining types:
+
+
+This object is currently using inferred types where TypeScript infers the types being used in JavaScript code:
+\begin{lstlisting}
+const student = {
+  name: "Ali",
+  id: 2385718,
+};
+\end{lstlisting}
+
+In order to manually define the variable types included in an object such as the one above, users can use an interface declaration:
+
+\begin{lstlisting}
+interface Student {
+  name: string;
+  id: number;
+}
+\end{lstlisting}
+
+After declaring the variable times with the use of interface, users can then define objects on the basis of these type declarations with the following syntax:
+
+\begin{lstlisting}
+const student: Student = {
+  name: "Ali",
+  id: 2385718,
+};
+\end{lstlisting}
+
+In the future, when defining student objects such as the one above, if the object does not match the variable names or types defined, TypeScript will return an error warning the user of the issue.
+
+More extensive information on the use of TypeScript in technical application with JavaScript is detailed in the TypeScript Handbook \cite{11}. When applied to JavaScript, TypeScript is an excellent tool for error checking and discovering bugs within code. The ability to statically type variables gives users the capability to develop more complete and error proof code that is better suitable for large scale applications. Because TypeScript is a compiled programming language unliked JavaScript which is interpreted, it allows for errors to be caught at compile time instead of run-time, giving users helpful feedback on where their program needs correction in order to develop well-working programs.
+
+
+\subsection{JavaScript and TypeScript in My Project}
+
+After learning about the fact that JavaScript was developed as a companion language to Java for the purpose of being able to add interactivity to web pages, I made the design decision to use HTML and CSS alongside TypeScript and JavaScript. While this ended up being a bit bigger of a task than originally intended since I have no prior experience in any of these four languages, I thought that it was important to use the language for the purpose in which it was intended and thought it would be fun to have a visual and interactive web page to show for my work.
+
+I ended up creating an interactive game of tic-tac-toe using TypeScript and JavaScript to handle all elements of the actual game and using HTML and CSS to create the visual aspects of the project. The HTML and CSS files are based upon this cited tutorial \cite{18} in order to set up the tic-tac-toe grid and be able to implement visual features into my game.
+
+The actually game was developed in TypeScript, I chose to code the entirety of the game with TypeScript so that I had access to the main functionality discussed previously, type checking. What I found is that TypeScripts ability for type checking was extremely helpful when error checking and correcting bugs. I ran into type errors many time in the development of my game and when I would try to compile the TypeScript file, it would return very specific errors that made the debugging process much easier. When no errors were found, the TypeScript file was then able to be compiled into a working JavaScript file that was called in the HTML file to actually implement the game. Actually implementing the project in TypeScript helped me realize just how helpful the ability to add data typing to a JavaScript file truly is. I ran a few brief tests in only a JavaScript file before working with TypeScript and the inability to add types makes errors much easier to come by and much harder to pin point.
+
+Implementing a visual game was a new experience for me and I was glad to be able to create a project that used both JavaScript and TypeScript with the intentions they were created. I developed a short demonstration of my project, talking through a few aspects of my implementation, how to compile and a demo of the game in action. The demonstration video of my project can be found here: \cite{Final Project Demo Video}
+
+\subsubsection{TypeScript Project Code}
+Below is the TypeScript code that implements my game of tic-tac-toe. The most notable point of implementation is the type checking that has been added throughout the file to ensure that the correct types are being used in order to avoid type errors:
+
+\begin{lstlisting}
+
+// Variables to keep track of players and which boxes are filled with x's and o's
+const xPlayer: string = 'X';
+const oPlayer: string = 'O';
+var xSelections: Array<string> = [];
+var oSelections: Array<string> = [];
+
+// Variable to keep track of the current player
+let currentPlayer: string = xPlayer;
+// Count variable: counts once per turn, when count is odd it is x's turn, when count is even it's o's turn
+let count: number = 0;
+
+//winning combinations in array form
+const threeInARow: Array<Array<string>> = [
+        // winning via a row of 3
+        ['0', '1', '2'],
+        ['3', '4', '5'],
+        ['6', '7', '8'],
+
+        // winning via a column of 3
+        ['0', '3', '6'],
+        ['1', '4', '7'],
+        ['2', '5', '8'],
+
+        // winning on the diagonal
+        ['0', '4', '8'],
+        ['2', '4', '6']
+      ]
+
+
+// eventListener for cell clicks to be able to respond to a user selecting a cell
+const grid = document.getElementById('grid') as HTMLElement;
+document.addEventListener('click', (event: MouseEvent) => handleCellClick(event));
+
+// Function to handle a cell click
+function handleCellClick(event: MouseEvent): void {
+
+  // Get the cell element that was clicked as an object
+  const targetCell = event.target as HTMLElement;
+
+  //gets booleans to classify if the area clicked is a cell, and if the cell is disabled (already used)
+  const isCell: boolean = targetCell.classList.contains('cell');
+  const isDisabled: boolean = targetCell.classList.contains('disabled');
+
+  //if the area clicked is a cell and is still available: x or o are inserted into that cell
+  //important: main if statement for a lot of the game
+  if (isCell && !isDisabled) {
+
+    //gets the cell number to keep track of where the x or o is placed
+    //these strings are stored in the .html file
+    const cellValue: string = targetCell.dataset.value;
+
+    //count for x's beings odd and evens being o's
+    count += 1;
+
+    //if it is x's turn
+    if(!(count%2 == 0)){
+      //set the target cell as being "disabled" and "x" (both defined in CSS file)
+        targetCell.classList.add('disabled');
+        targetCell.classList.add('x');
+        //add the cell number (string) to the xSelections array (this will help us check for winning combinations later)
+        xSelections.push(cellValue);
+        currentPlayer = oPlayer;
+
+        //only checks for wins once the xSelections array length is at least 3, since it takes at least three turns to win
+        if(xSelections.length >= 3){
+          //xWon() returns a boolean if there is a winning combination detected
+          if(xWon()){
+            //disables all cells so user cannot select cells after someone has won
+            document.querySelectorAll('disabled').length
+            //xWins() displays winner
+            xWins();
+          }
+        }
+    }
+
+    //if it is o's turn
+    if(count%2 == 0){
+      //set the target cell as being "disabled" and "x" (both defined in CSS file)
+        targetCell.classList.add('disabled');
+        targetCell.classList.add('o');
+        //add the cell number (string) to the oSelections array (this will help us check for winning combinations later)
+        oSelections.push(cellValue);
+        currentPlayer = xPlayer;
+
+        //only checks for wins once the oSelections array length is at least 3, since it takes at least three turns to win
+        if(oSelections.length >= 3){
+          //oWon() returns a boolean if there is a winning combination detected
+          if(oWon()){
+            //disables all cells so user cannot select cells after someone has won
+            document.querySelectorAll('disabled').length
+            //oWins() displays winner
+            oWins();
+          }
+        }
+    }
+
+    //if all cells are disbaled, checks for x and o wins but if none are found, the game is declared a tie game
+    if(!document.querySelectorAll('.cell:not(.disabled)').length) {
+      if(xWon() == true){
+        xWins();
+      }else if(oWon() == true){
+        oWins();
+      }else{
+        tieGame();
+      }
+    }
+  }
+}
+
+//prints "Tie Game!" by addinf text contect to the game-over-text defined in the CSS file
+function tieGame() {
+  document.querySelector('.done').classList.add('visible');
+  document.querySelector('.game-over-text').textContent = 'Tie Game!';
+}
+
+//prints "X Wins!" by addinf text contect to the game-over-text defined in the CSS file
+function xWins() {
+  document.querySelector('.done').classList.add('visible');
+  document.querySelector('.game-over-text').textContent = "X Wins!";
+}
+
+//prints "O Wins!" by addinf text contect to the game-over-text defined in the CSS file
+function oWins() {
+  document.querySelector('.done').classList.add('visible');
+  document.querySelector('.game-over-text').textContent = "O Wins!";
+}
+
+//checks to see if oPlayer has won
+function oWon(){
+  let i: number = 0;
+
+  //while loop that goes through winning combinations
+  while (i < threeInARow.length){
+    let scoreCount: number = 0;
+    //for loop that goes through each element in oSelections array to see if it is in current winning combo array
+    for(let a: number = 0; a < oSelections.length; ++a){
+      if(threeInARow[i].indexOf(oSelections[a]) != -1){
+        //counts every time a match is found in oSelections and the current winning combo
+        scoreCount += 1;
+      }
+
+      //if the count reached three, that means all indexes of a winning combination has been found in oSelections and O has won
+      if(scoreCount == 3){
+        //disables all cells so user cannot select cells after someone has won
+        document.querySelectorAll('.cell').forEach(cells => cells.classList.add('disabled'))
+        return true;
+      }
+    }
+    i++;
+  }
+  return false;
+}
+
+//checks to see if xPlayer has won
+function xWon(){
+  let i: number = 0;
+
+  //while loop that goes through winning combinations
+  while (i < threeInARow.length){
+    let scoreCount: number = 0;
+    //for loop that goes through each element in xSelections array to see if it is in current winning combo array
+    for(let a: number = 0; a < xSelections.length; ++a){
+      if(threeInARow[i].indexOf(xSelections[a]) != -1){
+        //counts every time a match is found in xSelections and the current winning combo
+        scoreCount += 1;
+      }
+      //if the count reached three, that means all indexes of a winning combination has been found in xSelections and X has won
+      if(scoreCount == 3){
+        //disables all cells so user cannot select cells after someone has won
+        document.querySelectorAll('.cell').forEach(cells => cells.classList.add('disabled'))
+        return true;
+      }
+    }
+    i++;
+  }
+  return false;
+}
+\end{lstlisting}
+
+\subsubsection{JavaScript Project Code}
+The JavaScript file for this project is the result of the compiled TypeScript file above in which the types are removed from variables. This is the file that is called in the HTML and CSS files and actually excecutes the game.
+
+\begin{lstlisting}
+    // Variables to keep track of players and which boxes are filled with x's and o's
+const xPlayer = 'X';
+const oPlayer = 'O';
+var xSelections = [];
+var oSelections = [];
+// Variable to keep track of the current player
+let currentPlayer = xPlayer;
+// Count variable: counts once per turn, when count is odd it is x's turn, when count is even it's o's turn
+let count = 0;
+//winning combinations in array form
+const threeInARow = [
+    // winning via a row of 3
+    ['0', '1', '2'],
+    ['3', '4', '5'],
+    ['6', '7', '8'],
+    // winning via a column of 3
+    ['0', '3', '6'],
+    ['1', '4', '7'],
+    ['2', '5', '8'],
+    // winning on the diagonal
+    ['0', '4', '8'],
+    ['2', '4', '6']
+];
+// eventListener for cell clicks to be able to respond to a user selecting a cell
+const grid = document.getElementById('grid');
+document.addEventListener('click', (event) => handleCellClick(event));
+// Function to handle a cell click
+function handleCellClick(event) {
+    // Get the cell element that was clicked as an object
+    const targetCell = event.target;
+    //gets booleans to classify if the area clicked is a cell, and if the cell is disabled (already used)
+    const isCell = targetCell.classList.contains('cell');
+    const isDisabled = targetCell.classList.contains('disabled');
+    //if the area clicked is a cell and is still available: x or o are inserted into that cell
+    //important: main if statement for a lot of the game
+    if (isCell && !isDisabled) {
+        //gets the cell number to keep track of where the x or o is placed
+        //these strings are stored in the .html file
+        const cellValue = targetCell.dataset.value;
+        //count for x's beings odd and evens being o's
+        count += 1;
+        //if it is x's turn
+        if (!(count % 2 == 0)) {
+            //set the target cell as being "disabled" and "x" (both defined in CSS file)
+            targetCell.classList.add('disabled');
+            targetCell.classList.add('x');
+            //add the cell number (string) to the xSelections array (this will help us check for winning combinations later)
+            xSelections.push(cellValue);
+            currentPlayer = oPlayer;
+            //only checks for wins once the xSelections array length is at least 3, since it takes at least three turns to win
+            if (xSelections.length >= 3) {
+                //xWon() returns a boolean if there is a winning combination detected
+                if (xWon()) {
+                    //disables all cells so user cannot select cells after someone has won
+                    document.querySelectorAll('disabled').length;
+                    //xWins() displays winner
+                    xWins();
+                }
+            }
+        }
+        //if it is o's turn
+        if (count % 2 == 0) {
+            //set the target cell as being "disabled" and "x" (both defined in CSS file)
+            targetCell.classList.add('disabled');
+            targetCell.classList.add('o');
+            //add the cell number (string) to the oSelections array (this will help us check for winning combinations later)
+            oSelections.push(cellValue);
+            currentPlayer = xPlayer;
+            //only checks for wins once the oSelections array length is at least 3, since it takes at least three turns to win
+            if (oSelections.length >= 3) {
+                //oWon() returns a boolean if there is a winning combination detected
+                if (oWon()) {
+                    //disables all cells so user cannot select cells after someone has won
+                    document.querySelectorAll('disabled').length;
+                    //oWins() displays winner
+                    oWins();
+                }
+            }
+        }
+        //if all cells are disbaled, checks for x and o wins but if none are found, the game is declared a tie game
+        if (!document.querySelectorAll('.cell:not(.disabled)').length) {
+            if (xWon() == true) {
+                xWins();
+            }
+            else if (oWon() == true) {
+                oWins();
+            }
+            else {
+                tieGame();
+            }
+        }
+    }
+}
+//prints "Tie Game!" by addinf text contect to the game-over-text defined in the CSS file
+function tieGame() {
+    document.querySelector('.done').classList.add('visible');
+    document.querySelector('.game-over-text').textContent = 'Tie Game!';
+}
+//prints "X Wins!" by adding text contect to the game-over-text defined in the CSS file
+function xWins() {
+    document.querySelector('.done').classList.add('visible');
+    document.querySelector('.game-over-text').textContent = "X Wins!";
+}
+//prints "O Wins!" by addinf text contect to the game-over-text defined in the CSS file
+function oWins() {
+    document.querySelector('.done').classList.add('visible');
+    document.querySelector('.game-over-text').textContent = "O Wins!";
+}
+//checks to see if oPlayer has won
+function oWon() {
+    let i = 0;
+    //while loop that goes through winning combinations
+    while (i < threeInARow.length) {
+        let scoreCount = 0;
+        //for loop that goes through each element in oSelections array to see if it is in current winning combo array
+        for (let a = 0; a < oSelections.length; ++a) {
+            if (threeInARow[i].indexOf(oSelections[a]) != -1) {
+                //counts every time a match is found in oSelections and the current winning combo
+                scoreCount += 1;
+            }
+            //if the count reached three, that means all indexes of a winning combination has been found in oSelections and O has won
+            if (scoreCount == 3) {
+                //disables all cells so user cannot select cells after someone has won
+                document.querySelectorAll('.cell').forEach(cells => cells.classList.add('disabled'));
+                return true;
+            }
+        }
+        i++;
+    }
+    return false;
+}
+//checks to see if xPlayer has won
+function xWon() {
+    let i = 0;
+    //while loop that goes through winning combinations
+    while (i < threeInARow.length) {
+        let scoreCount = 0;
+        //for loop that goes through each element in xSelections array to see if it is in current winning combo array
+        for (let a = 0; a < xSelections.length; ++a) {
+            if (threeInARow[i].indexOf(xSelections[a]) != -1) {
+                //counts every time a match is found in xSelections and the current winning combo
+                scoreCount += 1;
+            }
+            //if the count reached three, that means all indexes of a winning combination has been found in xSelections and X has won
+            if (scoreCount == 3) {
+                //disables all cells so user cannot select cells after someone has won
+                document.querySelectorAll('.cell').forEach(cells => cells.classList.add('disabled'));
+                return true;
+            }
+        }
+        i++;
+    }
+    return false;
+}
+\end{lstlisting}
+
+\subsubsection{Closing Project Comments}
+The source code for HTML and CSS files can be found in my GitHub repository. When opening the five files together in a folder, the TypeScript file can be compiled by running "tsc" via the command line and is compiled to JavaScript by running "tsc game.ts". The game can be played in a web browser by simply opening the index.html file as seen in the YouTube video I have attached. \cite{Final Project Demo Video}
+
+\ldots
+
+\section{Conclusions}\label{conclusions}
+
+
+The most notable thing that took place for me in this course over the duration of the semester was the realization of how much I had never considered before. What I mean by this, is that we covered so many technical details in which I had never truly considered how aspects of coding languages worked or why they were designed. I think that particularly, after creating and implementing our own basic programming language, it was extremely interesting to complete the write up portion of my final project. Diving deep into the histories of JavaScript and TypeScript and understanding why and how the languages were developed the way that they were gave me such a new perspective on any programming language that I have used before.
+
+As a self-design major with only about 40\% of my major being in computer science, this was a much more technical computer science class than any I had taken before. This definitely presented me with some struggles as far as trying to keep up with a class of almost entirely computer science majors, but it definitely opened my eyes to a new side of things than any other course I had taken previously. I can see how having deep and intentional knowledge of programming languages makes me a better programmer overall. You can only be so good at coding on a surface level without being able to back up your design and language choices with comprehensive understanding of the way that languages are made up. Overall, this class was very technically challenging for me with less of a background in technical skills such as these, however, I am so grateful for the opportunity to have learned so much about the basis of programming languages and be able to carry this knowledge into my future to apply in my language choices and implementations.
+
+
+\begin{thebibliography}{99}
+
+
+\bibitem[1]{1}\href{https://dl.acm.org/doi/pdf/10.1145/3386327}{JavaScript: The First 20 Years}, Wirfs-Brock, Allen, and Brendan Eich. “JavaScript: The First 20 Years.” Proceedings of the ACM on Programming Languages, vol. 4, no. HOPL, 2020, pp. 1–189., doi:10.1145/3386327.
+
+\bibitem[2]{2}\href{https://dl.acm.org/doi/pdf/10.1145/1142958.1142972}{JavaScript}, Doernhoefer, Mark. “JavaScript.” ACM SIGSOFT Software Engineering Notes, vol. 31, no. 4, 2006, pp. 16–24., doi:10.1145/1142958.1142972.
+
+\bibitem[3]{3}\href{https://link.springer.com/chapter/10.1007/978-3-662-44202-9_11#citeas}{Undertanding TypeScript}, Bierman, Gavin, et al. “Understanding Typescript.” ECOOP 2014 – Object-Oriented Programming, 2014, pp. 257–281., doi:10.1007/978-3-662-44202-9\_11.
+
+\bibitem[4]{4}\href{https://web.archive.org/web/19970614003224/http://home.netscape.com/newsref/pr/newsrelease25.html}{Netscape To License Sun's Java Programming Language Press Release}, Netscape Communications Corporation. “NETSCAPE TO LICENSE SUN'S JAVA PROGRAMMING LANGUAGE.” Press Release, 23 May 1995.
+
+\bibitem[5]{5}\href{https://web.archive.org/web/19970614002809/http://home.netscape.com:80/newsref/pr/newsrelease67.html}{Netscape and Sun Announce JavaScript, the Open, Cross-Platform Object Scripting Language for Enterprise Networks and the Internet}, Netscape Communications Corporation. “Netscape and Sun Announce JavaScript, the Open, Cross-Platform Object Scripting Language for Enterprise Networks and the Internet.” Press Release, 1997, $web.archive.org/web/19970614002809/home.netscape.com:80/newsref/pr/newsrelease67.html$. Originally release December 4, 1995
+
+\bibitem[6]{6}\href{https://web.archive.org/web/19970613234917/http://home.netscape.com:80/eng/mozilla/2.0/handbook/javascript/index.html}{Netscape Handbook}, “JavaScript Basics: Introduction.” JavaScript Authoring Guide, 13 June 1997, $web.archive.org/web/19970613234917/home.netscape.com:80/eng/mozilla/2.0/handbook/javascript/index.html$.
+
+\bibitem[7]{7}\href{https://books.google.com/books?hl=en&lr=&id=dAYvDwAAQBAJ&oi=fnd&pg=PR5&dq=object-oriented+languages+JavaScript+&ots=4l9H4SZpBY&sig=BL5PctDpcVNpNCQ21q4k8k_TkWA#v=onepage&q=object-oriented%20languages%20JavaScript&f=false}{The Principles of Object-Oriented JavaScript}, Zakas, Nicholas C., The Principles of Object-Oriented JavaScript, No Starch Press, 2014.
+
+\bibitem[8]{8}\href{https://www.w3schools.com/js/js_variables.asp}{JavaScript Variables}, JavaScript Variables, $www.w3schools.com/js/js_variables.asp$.
+
+\bibitem[9]{9}\href{https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/#:~:text=var%20declarations%20are%20globally%20scoped%20or%20function%20scoped%20while%20let,the%20top%20of%20their%20scope.}{Var, Let, and Cons- What's the Difference?}, Atuonwu, Sarah Chima. “Var, Let, and Const – What's the Difference?” FreeCodeCamp.org
+
+\bibitem[10]{10}\href{https://books.google.com/books?hl=en&lr=&id=UZB352QcfiMC&oi=fnd&pg=PP3&dq=development+of+TypeScript+&ots=sSSHwcWTni&sig=nEpU0OnsfhPkFJP5wwk_9NGA6Nk#v=onepage&q=development%20of%20TypeScript&f=false}{TypeScript Revealed}, Maharry, Dan. Typescript Revealed, Apress, 2013.
+
+\bibitem[11]{11}\href{https://www.typescriptlang.org/docs/handbook/intro.html}{The TypeScript Handbook}, Microsoft. “Handbook - the Typescript Handbook.” TypeScript.
+
+\bibitem[12]{12}\href{https://ieeexplore-ieee-org.libproxy.chapman.edu/stamp/stamp.jsp?tp=&arnumber=8994835}{Boris Cherny on TypeScript}, Black, Nate, and Boris Cherny. “Boris Cherny on TypeScript.” Software Engineering Radio, 12 Feb. 2020.
+
+\bibitem[13]{13}\href{https://www.microsoft.com/en-us/research/wp-content/uploads/2013/01/steve-lucco_modernprogramming.pdf}{TypeScript: Application-scale JavaScript}, Steve Lucco's PowerPoint Deck presented at Microsoft's 2013 Faculty Summit.
+
+\bibitem[14]{14}\href{https://www.educative.io/blog/typescript-vs-javascript-whats-the-difference}{TypeScript vs JavaScript: What's the difference?}, “Typescript vs Javascript: What's the Difference?” Educative.
+
+\bibitem[15]{15}\href{https://ieeexplore-ieee-org.libproxy.chapman.edu/stamp/stamp.jsp?tp=&arnumber=9796341}{To Type or Not to Type?}, Bogner, Justus, and Manuel Merkel. “To Type or Not to Type? A Systematic Comparison of the Software Quality of JavaScript and TypeScript Applications on GitHub.” Leatherby Libraries, 2022 IEEE/ACM 19th International Conference on Mining Software Repositories (MSR), 23 May 2022.
+
+\bibitem[16]{16}\href{https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html}{TypeScript for JavaScript Programmers}, Microsoft. “Handbook - the Typescript Handbook: TypeScript for JavaScript Programmers.” TypeScript.
+
+\bibitem[17]{17}\href{https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/#:~:text=functions%20in%20JS-,What%20are%20classes%20in%20JavaScript%3F,a%20prototype%2Dbased%20inheritance%20model.}{JavaScript Classes}, Paralkar, Keyur. “JavaScript Classes – How They Work with Use Case Example.” FreeCodeCamp.org, FreeCodeCamp.org, 13 Dec. 2021.
+
+\bibitem[18]{18}\href{https://www.webtips.dev/tic-tac-toe-in-javascript}{Tic-Tac-Toe Tutorial used for HTML and CSS Grid}
+
+\bibitem[19]{19}\href{https://miuc.org/definition-of-a-domain-specific-modelling-language/}{DSML}, Domain-Specific Modeling Languages
+
+\bibitem[20]{20}\href{https://www.fpml.org/}{FpML}, What is an FpMl?
+
+\bibitem[BE Blog]{BE}\href{https://web.archive.org/web/20150204160755/http://brendaneich.com/2008/04/}{Brendan Eich Blog}, Eich, Brendan. “Brendan Eich Blog.” Brendan Eich " 2008 " April, $web.archive.org/web/20150204160755/brendaneich.com/2008/04/$.
+
+\bibitem[Final Project Demo Video]{Final Project Demo Video}\href{https://youtu.be/yDoLiSOlFX0}{Final Project Demonstration Youtube Video}, Ali Woodward
+
+\bibitem[PL]{PL} \href{https://github.com/alexhkurz/programming-languages-2022/blob/main/README.md}{Programming Languages 2022}, Chapman University, 2022.
+
+\end{thebibliography}
+
+\end{document}

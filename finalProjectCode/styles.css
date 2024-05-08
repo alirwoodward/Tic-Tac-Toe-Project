@@ -1,0 +1,88 @@
+#grid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+/*these grid settings are for the layout of the grid squares*/
+.cell:nth-child(-n + 3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+.cell:nth-last-of-type(-n + 3) {
+    border-bottom: none;
+}
+
+.x::after {
+    content: 'X';
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    transform: translateX(-30%);
+}
+
+.o::after {
+    content: 'O';
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+    transform: translateX(-30%);
+}
+
+/*this is to indicate which cells are already full*/
+.disabled {
+    cursor: not-allowed;
+}
+
+/*indicateds cell is open*/
+/*hover feature changes the color of the grid square so that a user can tell what they are about to select when the cursor hovers*/
+.cell:not(.disabled):hover {
+    background: #eee;
+}
+
+/*when the game ends this is what is displayed in the middle of the screen*/
+.done {
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+	/*creates overlay so that the text can be overlayed on top of the grid*/
+    box-shadow: rgb(0 0 0 / 50%) 0 0 0 9999px;
+}
+
+/*text that is displaye when the game ends*/
+.game-over-text {
+    position: absolute;
+    top: -200px;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+    transform: translateX(-30%);
+}
+
+.visible {
+    display: block;
+}
